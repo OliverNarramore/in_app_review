@@ -1,3 +1,7 @@
+# [2.0.13]
+
+- Support Android Gradle Plugin 9 built-in Kotlin: only apply the Kotlin Gradle Plugin below AGP 9, or when `android.builtInKotlin` is off.
+
 # [2.0.12]
 
 - Fix an Android NullPointerException that sometimes occurred when apps were backgrounded.

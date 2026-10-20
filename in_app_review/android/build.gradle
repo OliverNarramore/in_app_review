@@ -22,7 +22,13 @@ allprojects {
 }
 
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
+
+def agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0] as int
+def builtInKotlin = project.findProperty('android.builtInKotlin')?.toString()?.toBoolean() ?: false
+def usesKotlinGradlePlugin = agpMajor < 9 || !builtInKotlin
+if (usesKotlinGradlePlugin) {
+    apply plugin: "kotlin-android"
+}
 
 android {
     namespace = "dev.britannio.in_app_review"
@@ -34,8 +40,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11
+    if (usesKotlinGradlePlugin) {
+        kotlinOptions {
+            jvmTarget = JavaVersion.VERSION_11
+        }
     }
 
     sourceSets {
